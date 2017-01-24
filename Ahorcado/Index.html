@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Juego del Ahorcado</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="design.css">
+		
+	</head>
+	<body onload="inicializa()">
+		<center>
+			<p >JUEGO DEL AHORCADO</p>
+
+			<img src="0.png" id="imagen">
+			<p id="restantes"></p>
+			<h1 id="palabra"></h1>
+			<p id="longitud"></p>
+			<p id="restante"></p>
+				<input id="letra" type="text" name="letra" maxlength="1" autofocus="" autocomplete="off">
+				<input id = "boton" type="submit" value="Juega" onclick="comprueba()">
+			<h1 id="frase"></h1>
+			<p id="dichas"></p>
+		</center>
+	</body>
+	<script type="text/javascript">
+		var imagen = document.getElementById("imagen");
+			var palabraHTML = document.getElementById("palabra");
+			var letra = document.getElementById("letra");
+			var dichas = [];
+			var fallos;
+			var aciertos;
+			//var cookiefallos
+			//var cookieaciertos
+			var lista = ["PEYORATIVO","MISANTROPIA","HIPOFISIS","HIPOTALAMO","VENTRICULO","ESCLEROSIS","NECROSIS","ISQUEMIA","FILANTROPIA","EPILEPSIA","ANTICONSTITUCIONAL",
+"ELECTROMAGNETISMO","CARBONIFICACION","ELECTROCARDIOGRAMA","LACTOVEGETARIANISMO","MAGNETOENCEFALOGRAFIA","NEURORRETROALIMENTACION","PARALELEPIPEDOS","OTORRINOLARINGOLOGIA ",
+"ROMBICOSIDODECAEDRO","DIMENSION","MISION","CORRECCION","ILUSION","PASION","DIVISION","PRESION","DECISION","PRECISION","COMPRENSION","PRIVACION","INTENCION","COMPOSICION",
+"TELEVISION","TRADICION","OCASION","TENSION","UNCION","ORACION","TRAICION","DESENLACE","ISOSCELES","DESCENSO","ESENCIA","ESCENARIO","EXCENTRICO","ESCENA","FASCINAR","EXENTO",
+"EXEQUIAS","EXCESO","EXCESIVO","EXIMIO","ASCENSO","DESCENSO","ASCENSOR","AGAZAPADO","BLANCUZCO","AGUJERO","BOHEMIO","ALCAHUETE","BRAVO","ALFEREZ","BRUSCO","ALMACEN","EBULLICION",
+"AZAHAR","CALABOZO","BALSAMO","CAOTICO","BETUN","BIFIDO","CELDA","HASTIADO","DESCANSO","DESCONCERTAR","APERCIBIMIENTO","DESHENEBRAR","SABUESO","DIVISIBILIDAD",
+"PESCUEZO","CONYUGE","EMBARCAR","DEBUT","EMBESTIDA","DEGOLLAR","ENCALLAR","DELGADEZ","ENGENDRO","ENGULLIR","FASCINACION","ENVANECER","ERIZO","FUELLE","ESCABULLIRSE","ESCASEZ",
+"DECISION","EXTENSION","ESTRIBO","EXHALAR","GRANIZO","GRAZNIDO","HABLADURIA","HACIENDA","HACHA","GUARIDA","HABICHUELA","HALAGAR","HAZAÑA","HALOGENO","HALLAZGO","HAMACA","HEBREO",
+"HECHICERO","HENDIDURA","HERBIVORO","HELECHO","HERIDO","HIBERNACION","HIBRIDO","HERRADURA","HERRAMIENTA","HIPOTESIS","HOGUERA","HOJALATA","HIPOTECA","HONESTO","HOMBRO","HOMENAJE",
+"AHORCAR","HORIZONTE","HORMIGA","HORNEAR","HOSPITALIDAD","HUELGA","HUELLA","HUMEDO","HUMILDAD","HUNDIMIENTO","ICONO","HURACAN","HURTAR","ILUSION","IMPERMEABLE","IMAGEN","INDICE",
+"INESTABLE","INMOVILIZAR","INOCENTE","INYECCION","JEROGLIFICO","JINETE","LADRILO","LOMBRIZ","JUGLAR","LAPIZ","LICENCIA","LUCIDEZ","LIENZO"];
+			var aleatorio;
+			var respuesta;
+			var palabra;
+			var MAX = 5;
+			
+
+
+			function inicializa(){
+				fallos = 0;
+				aciertos = 0;
+				aleatorio = Math.floor((Math.random() * lista.length));
+				respuesta = lista[aleatorio];
+				if (respuesta.length >= 10){
+				MAX = 6;
+				document.getElementById("frase").innerHTML = "Como es una palabra dificil, tienes un intento más";
+				}
+				document.getElementById("restantes").innerHTML = "Fallos Restantes: " + (MAX - fallos);
+				document.getElementById("longitud").innerHTML = "Longitud de la palabra: " + respuesta.length;
+				document.getElementById("restante").innerHTML = "Letras que faltan por decir: " + (respuesta.length - aciertos);
+				
+
+				palabra = "";
+				for(i = 0; i < respuesta.length; i++)
+					palabra += "*";
+				palabraHTML.innerHTML = palabra;
+				palabra = palabra.toString().split("");
+				//var decodedCookie = decodeURIComponent(document.cookie);
+			}
+
+
+			function comprueba() {
+				letra.value = letra.value.toUpperCase();
+				var aux = 0, i;
+				if(repetido()!= 3){
+				for(i = 0; i < respuesta.length; i++){
+					if (respuesta.charAt(i) == letra.value){
+						palabra[i] = letra.value;
+						palabraHTML.innerHTML = palabra.join("");
+						document.getElementById("frase").innerHTML = "Bien!";
+						aciertos++;
+						aux = 1;
+					}
+				}
+				if(aux == 0){
+					document.getElementById("frase").innerHTML = "Fallo!";
+					fallos++;
+					switch (fallos){
+						case 1: imagen.src = "1.png";
+								break;
+						case 2: imagen.src = "2.png";
+								break;
+						case 3: imagen.src = "3.png";
+								break;
+						case 4: imagen.src = "4.png";
+								break;
+						case 5: imagen.src = "5.png";
+								if(MAX == 6)
+									document.getElementById("frase").innerHTML = "Fallo! ULTIMA OPORTUNIDAD EXTRA!!";
+								break;
+						case 6: imagen.src = "5.png";
+								break;
+								
+					}
+				}
+				if(fallos == MAX){
+					document.getElementById("frase").innerHTML = "PERDISTE!";
+					document.getElementById("boton").style.display = 'none';
+					document.getElementById("letra").style.display = 'none';
+					document.getElementById("palabra").innerHTML = respuesta;
+					document.cookie = cookieaciertos + (cookiefallos + 1);
+				}
+				else if(aciertos == palabra.length){
+					document.getElementById("frase").innerHTML = "GANASTE!";
+					document.getElementById("boton").style.display = 'none';
+					document.getElementById("letra").style.display = 'none';
+					document.cookie = (cookieaciertos + 1) + cookiefallos;
+				}
+				document.getElementById("restantes").innerHTML = "Fallos Restantes: " + (MAX - fallos);
+				document.getElementById("restante").innerHTML = "Letras que faltan por decir: " + (respuesta.length - aciertos);
+				document.getElementById("letra").value = "";
+				document.getElementById("dichas").innerHTML = "Letras dichas:" + dichas;
+			}
+			else
+				document.getElementById("frase").innerHTML = "Ya has introducido esa letra!";
+			}
+			function repetido(){
+				for(var i = 0; i < dichas.length; i++){
+					if(dichas[i]==letra.value)
+						return 3;
+				}
+				for(var i=0; i < dichas.length; i++){}
+					dichas[i] = letra.value;
+				}
+	</script>
+</html>
+
+
