@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<body  onload="pintar()" bgcolor="green" style="color: white">
+<center>
+<canvas id="myCanvas" width="500px" height="500px" style="border:1px solid black;" onclick="showCoords(event)">
+Your browser does not support the HTML5 canvas tag.</canvas>
+<br>
+<label style="color: white">LINEA:</label>
+<input type="number" name="linea" id="linea" min="1" max="10">
+<label style="color: white">COLUMNA:</label>
+<input type="number" name="columna" id="columna" min="1" max="10">
+<br>
+<p id="coordenadas"></p>
+<input type="radio" name="cuadrado" value="encendido" id="encendido"> ENCENDIDO<br>
+<input type="radio" name="cuadrado" value="apagado" id="apagado"> APAGADO<br>
+<input type="button" name="modificar" value="MODIFICAR" onclick="modifica()">
+<p id="texto"></p>
+<script>
+	var c = document.getElementById("myCanvas");
+	var ctx = c.getContext("2d");
+	var linea = document.getElementById("linea");
+	var columna = document.getElementById("columna");
+	var matriz = ["1000000000",
+				  "1100000000",
+				  "0100000000",
+				  "0111111100",
+				  "0100000100",
+				  "0100000100",
+				  "0111111111",
+				  "0000000100",
+				  "0000000111",
+				  "0000000100"]; 
+	var lineaclick;
+	var columnaclick;
+
+	function pintar(){
+		for(var i = 0; i < 10; i++){
+			for(var j = 0; j < 10; j++){
+				if(matriz[i][j] == 1){
+					ctx.fillStyle = "grey";
+					ctx.fillRect(j*50, i*50, 50, 50);
+
+				}
+				else{
+					ctx.fillStyle = "green";
+					ctx.fillRect(j*50, i*50, 50, 50);
+				}
+			}
+			
+		}
+	}
+
+	function modifica(){
+		var lin = document.getElementById("linea").value;
+		var col = document.getElementById("columna").value;
+		lin--;
+		col--;
+		if(document.getElementById("encendido").checked)
+			matriz[lin][col] = "1";
+		else
+			matriz[lin][col] = "0";
+		pintar();
+
+	}
+	
+
+	function showCoords(event) {
+    var x = event.clientX-710;
+    var y = event.clientY-9;
+    lineaclick=Math.floor(y/50);
+    columnaclick=Math.floor(x/50);
+    var coords = "Columna: " + columnaclick + " Fila: " + lineaclick;
+    document.getElementById("coordenadas").innerHTML = coords;
+}
+
+
+</script>
+</center>
+</body>
+</html>
