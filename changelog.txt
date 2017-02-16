@@ -1,0 +1,6 @@
+16 FEBRERO (todo guardado en index-colores prueba.html):
+-AMPLIADA MATRIZ DE 10X10 A 20X20
+-CREADO ALGORITMO PARA COMPROBAR SI HAY NODOS (se convierte en azul)
+-Si es carretera de 1 sentido se pone gris, si es de doble sentido, se pone rojo.
+-Añadida opcion de borrar (vuelve a ponerlo verde)
+-Fondo cambiado a negro
