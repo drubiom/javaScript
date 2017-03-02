@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<center>
+<img src="off.png" id="rojo" height="100pt"><br>
+<img src="off.png" id="ambar" height="100pt"><br>
+<img src="verde.png" id="verde" height="100pt"><br>
+<img src="peatonrojo.jpg" id="peaton" height="100pt" width="100pt"><br>
+<img src="PULSE.png" id="boton" height="200pt" onclick="botonpulsado()">
+</center>
+<script type="text/javascript">
+var temp;
+	function botonpulsado(){
+		document.getElementById("boton").src="ESPERE.png";
+		setTimeout(ambar, 5000);
+	}
+
+	function ambar(){
+		document.getElementById("ambar").src="ambar.png";
+		document.getElementById("verde").src="off.png";
+		setTimeout(rojo, 2500);
+	}
+	function rojo(){
+		temp = 0;
+		document.getElementById("ambar").src="off.png";
+		document.getElementById("rojo").src="rojo.png";
+		document.getElementById("peaton").src="peatonverde.jpg";
+		setTimeout(parpadeo, 7000);
+		setTimeout(verde, 15000);
+	}
+	function verde(){
+		temp = 1;
+		document.getElementById("verde").src="verde.png";
+		document.getElementById("ambar").src="off.png";
+		document.getElementById("peaton").src="peatonrojo.jpg";
+		document.getElementById("boton").src="PULSE.png";
+	}
+
+	function parpadeo() {
+		document.getElementById("rojo").src="off.png";
+		if(temp == 0){
+			document.getElementById("peaton").src = "peatonoff.jpg";
+			document.getElementById("ambar").src = "off.png";
+			setTimeout(nada, 500);
+		}
+	}
+	function nada(){
+		document.getElementById("peaton").src = "peatonverde.jpg";
+		document.getElementById("ambar").src = "ambar.png";
+		setTimeout(parpadeo, 500);
+	}
+		
+</script>
+</body>
+</html>
