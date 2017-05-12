@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TragaPerras</title>
+		<meta charset="utf-8">
+</head>
+<body>
+<p id="titulo" align="center" style="background-color: green; color: yellow;font-size: 20pt;margin-left: 25%; width: 50%;">
+<img src="imagenes/Limon.png" width="5%">
+<button type="button" onclick="inicio()" style="width: 20%; vertical-align: top;" >Inicio</button>
+<button type="button" onclick="juego()" style="width: 20%; vertical-align: top;">Juego</button>
+<button type="button" onclick="acerca()" style="width: 20%; vertical-align: top;">Acerca de...</button>
+</p>
+<br><br>
+<p id="instrucciones" style="display: block; margin-left: 25%; width: 50%;">
+<b>Bienvenido a la máquina Tragaperras</b><br><br>
+Lo primero de todo decirte que este juego es gratis, si si, has leido bien, puedes jugar a una máquina tragaperras completamente gratis (pero si quieres pagar, te puedo dejar mi cuenta de paypal). La parte mala es que como es gratis jugar, tampoco ganarás nada, vamos que ya te anticipo que es una pérdida de tiempo.<br>7
+
+Bueno como seguro que eres un típico ludópata de bar, no hace falta que te explique como funciona el juego.
+
+La puntuación que obtendrás al tirar es la siguiente:<br>
+Si sacas 3 figuras iguales: 1000 puntos.<br>
+Si sacas 2 figuras iguales: 500 puntos.<br>
+En cualquier otra circunstancia puedes levantarte y dejar de jugar, en otras palabras: Eres un inútil. <br><br>
+
+Pero como todo en la vida, puedes hacer un poco de trampa (En las tragaperras reales esto no es trampa porque pagas dinero) y aunque te salga alguna diferente tienes la grandísima oportunidad de volver a tirar solo una de las figuras (o las que quieras, total no ganas nada). Para eso puedes pulsar cualquiera de los botones que pone "Cambiar *".<br>
+Una vez que ya has terminado el turno, tienes que guardar la puntuación, haciendo click en "Guardar Tirada". Puedes jugar todas las veces que quieras pero estarás perdiendo el tiempo, hazme caso.<br>
+Es muy simple y adictiva, por lo que te rogamos que juegues con responsabilidad. <br>
+No nos hacemos responsables de las noches que te quedes sin dormir.<br>
+Para cualquier otra consulta puedes mandarme un correo en la dirección que aparece en el apartado "Acerca de..."
+
+</p>
+<p id="juego" style="display: none; margin-left: 25%; width: 50%; text-align: center;">
+	JUEGO<br>
+	Marcador Actual:<br>
+	<span id="marcador" style="text-align: right; background-color: orange;">0</span><br>
+	Tirada Actual:<br>
+	<span id="tirada" style="text-align: right; background-color: orange;">0</span><br>
+	<img src="" width="5%" height="45px" id="im1">
+	<img src="" width="5%" height="45px" id="im2">
+	<img src="" width="5%" height="45px" id="im3">
+	<br>
+	<button type="button" onclick="reinicio()" style="width: 20%; vertical-align: top;" >Reiniciar</button>
+	<button type="button" onclick="guarda()" style="width: 20%; vertical-align: top;" >Guardar Tirada</button>
+	<button type="button" onclick="aleatorio()" style="width: 20%; vertical-align: top;" >Jugar</button><br>
+	<button type="button" onclick="cambia1()" style="width: 20%; vertical-align: top;" >Cambiar 1</button>
+	<button type="button" onclick="cambia2()" style="width: 20%; vertical-align: top;" >Cambiar 2</button>
+	<button type="button" onclick="cambia3()" style="width: 20%; vertical-align: top;" >Cambiar 3</button>
+<br><br><span id="notificaciones" style="text-align: right; background-color: orange; color: white; font-size: 20px;"></span>
+
+</p>
+<p id="acerca" style="display: none; margin-left: 25%; width: 50%; text-align: center;">
+Juego (si se puede llamar así) creado por <a href="mailto:davidrubio.95@gmail.com">David Rubio</a> el 11 de Mayo de 2017<br>
+
+</p>
+
+
+<script type="text/javascript">
+	var pInicio = document.getElementById("instrucciones");
+	var pJuego = document.getElementById("juego");
+	var pAcerca = document.getElementById("acerca");
+	var marcador = 0;
+	var tirada = 0;
+	var temp1, temp2, temp3;
+	var i;
+
+	function inicio(){
+		pInicio.style.display = 'block';
+		pJuego.style.display = 'none';
+		pAcerca.style.display = 'none';
+	}
+	function juego(){
+		pInicio.style.display = 'none';
+		pJuego.style.display = 'block';
+		pAcerca.style.display = 'none';
+
+	}
+	function acerca(){
+		pInicio.style.display = 'none';
+		pJuego.style.display = 'none';
+		pAcerca.style.display = 'block';
+	}
+	function reinicio(){
+		marcador = 0;
+		tirada = 0;
+		document.getElementById("marcador").innerHTML = marcador;
+		document.getElementById("tirada").innerHTML = tirada;
+		document.getElementById("notificaciones").innerHTML = "Reiniciado correctamente. ¿Que pasa? ¿Ibas mal?";
+	}
+	function guarda(){
+		marcador += tirada;
+		tirada = 0;
+		document.getElementById("marcador").innerHTML = marcador;
+		document.getElementById("tirada").innerHTML = tirada;
+		limpia();
+	}
+	function aleatorio(){
+		temp1 = Math.floor((Math.random() * 3) + 1);
+		pinta1();
+		temp2 = Math.floor((Math.random() * 3) + 1);
+		pinta2();
+		temp3 = Math.floor((Math.random() * 3) + 1);
+		pinta3();
+		comprueba();
+	}
+	function pinta1(){
+		if(temp1 == 1)
+		document.getElementById("im1").src = "imagenes/Limon.png";
+		else if(temp1 == 2)
+		document.getElementById("im1").src = "imagenes/Fresa.png";
+		else if(temp1 == 3)
+		document.getElementById("im1").src = "imagenes/Sandia.png";
+	}
+	function pinta2(){
+		if(temp2 == 1)
+		document.getElementById("im2").src = "imagenes/Limon.png";
+		else if(temp2 == 2)
+		document.getElementById("im2").src = "imagenes/Fresa.png";
+		else if(temp2 == 3)
+		document.getElementById("im2").src = "imagenes/Sandia.png";
+	}
+	function pinta3(){
+		if(temp3 == 1)
+		document.getElementById("im3").src = "imagenes/Limon.png";
+		else if(temp3 == 2)
+		document.getElementById("im3").src = "imagenes/Fresa.png";
+		else if(temp3 == 3)
+		document.getElementById("im3").src = "imagenes/Sandia.png";
+	}
+	function comprueba(){
+		if(temp1 == temp2 && temp1 == temp3){
+			tirada = 1000;
+			document.getElementById("notificaciones").innerHTML = "Vamos ya! 1000 puntitos";
+		}
+		else if(temp1 != temp2 && temp1 != temp3 && temp2 != temp3){
+			tirada = 0;
+			document.getElementById("notificaciones").innerHTML = "Jajaja No das ni una";
+		}
+		else{
+			tirada = 500;
+			document.getElementById("notificaciones").innerHTML = "No está mal. Recuerda que puedes volver a tirar la figura que falta";
+		}
+		document.getElementById("tirada").innerHTML = tirada;
+	}
+	function cambia1(){
+		temp1 = Math.floor((Math.random() * 3) + 1);
+		pinta1();
+		comprueba();
+	}
+	function cambia2(){
+		temp2 = Math.floor((Math.random() * 3) + 1);
+		pinta2();
+		comprueba();
+	}
+	function cambia3(){
+		temp3 = Math.floor((Math.random() * 3) + 1);
+		pinta3();
+		comprueba();
+	}
+	function limpia(){
+		document.getElementById("im1").src = "";
+		document.getElementById("im2").src = "";
+		document.getElementById("im3").src = "";
+		document.getElementById("notificaciones").innerHTML = "La tirada ha sido guardada (uy! rima y todo)";
+	}
+</script>
+</body>
+</html>
