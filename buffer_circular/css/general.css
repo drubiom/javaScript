@@ -1,0 +1,16 @@
+#page{
+
+
+
+	
+	border-color: black;
+	margin: 0 auto 0 auto
+	background-color: white;
+	padding: 2ex;
+	color : #333;
+}
+
+#pila {
+	border: 1px solid black;
+	padding: 4ex;
+}
