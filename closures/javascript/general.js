@@ -12,6 +12,12 @@ Array.prototype.inject = function (acum, fn){
 
 function main(){
 	var a = [1,2,3,4,5,6]
+	var p = []
+	a.each(function(el){
+		if(el > 2 && (el % 2) ==1)
+		p.push(el)
+	})
+	alert(p.tosource())
 	alert(a.inject(0, function(acum, el){
 		return acum+el
 	}))
